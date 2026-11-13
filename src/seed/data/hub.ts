@@ -1,0 +1,325 @@
+import type { AuthorKey, TopicSlug } from './people'
+
+export type SeedSession = {
+  slug: string
+  title: string
+  question: string
+  summary: string
+  takeaways: string[]
+  notes?: string
+  date: string
+  format: 'online' | 'offline' | 'hybrid' | 'audio'
+  location?: string
+  speakers: AuthorKey[]
+  guests?: string
+  participants?: number
+  topics: TopicSlug[]
+  featured?: boolean
+}
+
+export const sessions: SeedSession[] = [
+  {
+    slug: 'suniy-intellekt-va-davlat-boshqaruvi',
+    title: 'Sunʼiy intellekt va davlat boshqaruvi: qarorni kim qabul qiladi?',
+    question: 'Algoritmlar davlat xizmatlarini adolatliroq qiladimi yoki masʼuliyatni yashiradimi?',
+    summary: 'Raqamli hukumat, avtomatlashtirilgan qarorlar va fuqarolar huquqlari haqida ochiq muhokama. Ishtirokchilar oldindan savol yuborishi mumkin.',
+    takeaways: [],
+    date: '2026-11-28T13:00:00.000Z',
+    format: 'online',
+    location: 'Zoom + Telegram jonli efir',
+    speakers: ['dilshod', 'malika'],
+    topics: ['siyosat', 'huquq'],
+    featured: true,
+  },
+  {
+    slug: 'iqtisodiy-erkinlik-va-ijtimoiy-adolat',
+    title: 'Iqtisodiy erkinlik va ijtimoiy adolat: murosa mumkinmi?',
+    question: 'Bozor erkinligi va ijtimoiy himoya oʻrtasidagi muvozanat qayerda?',
+    summary: 'Telegram audio-chatida oʻtadigan davra suhbati: Hayek va Sen qarashlari, Oʻzbekiston tajribasi.',
+    takeaways: [],
+    date: '2026-12-19T14:00:00.000Z',
+    format: 'audio',
+    location: 'Telegram audio-chat',
+    speakers: ['rustam', 'aziz'],
+    topics: ['iqtisod', 'falsafa'],
+  },
+  {
+    slug: 'forobiy-bugun',
+    title: 'Forobiy bugun: fozil shahar gʻoyasi XXI asrda',
+    question: 'Ming yil oldingi ideal jamiyat haqidagi gʻoyalar bugungi shahar va davlatga nima bera oladi?',
+    summary: 'Samarqanddagi oflayn davra suhbati: talabalar, tadqiqotchilar va mehmon spiker Forobiy merosini zamonaviy boshqaruv bilan bogʻlab muhokama qildi.',
+    takeaways: [
+      'Forobiyning rahbar fazilatlari zamonaviy davlat xizmati etikasi bilan hamohang',
+      '“Fozil shahar” gʻoyasi — umumiy manfaat va ishonch institutlariga asoslangan jamiyat',
+      'Forobiy asarlarini zamonaviy oʻzbek tilida qayta nashr etish va sharhlash zarur',
+    ],
+    notes: `## Muhokama qisqacha
+Davra suhbati uch qismdan iborat boʻldi: Forobiy hayoti va davri, “Fozil odamlar shahri”ning asosiy gʻoyalari va ularning bugungi talqini.
+
+## Ishtirokchilar savollari
+- Forobiy demokratiyani qanday baholagan?
+- Ideal rahbar sifatlari bugun qanday tanlov mexanizmlari orqali taʼminlanadi?
+- Forobiy merosini maktab dasturiga qanday kiritish mumkin?`,
+    date: '2026-10-24T11:00:00.000Z',
+    format: 'offline',
+    location: 'Samarqand',
+    speakers: ['zarina', 'shuhrat'],
+    participants: 120,
+    topics: ['meros', 'falsafa'],
+    featured: true,
+  },
+  {
+    slug: 'shahar-va-qishloq-yoshlari',
+    title: 'Shahar va qishloq yoshlari: imkoniyatlar tengligi',
+    question: 'Taʼlim, axborot va ishga kirishda hududiy tafovutni qanday qisqartirish mumkin?',
+    summary: 'Toshkent va viloyatlardan qoʻshilgan yoshlar oʻz tajribasi bilan boʻlishdi, amaliy takliflar ishlab chiqildi.',
+    takeaways: [
+      'Raqamli kutubxonalar qishloq yoshlari uchun eng tez taʼsir qiladigan yechim',
+      'Mentorlik dasturlari shahar va qishloq oʻrtasida koʻprik boʻla oladi',
+      'Muhokama natijasida “Qishloq yoshlari uchun onlayn kutubxona” tahlilnomasi yozildi',
+    ],
+    date: '2026-09-26T12:00:00.000Z',
+    format: 'hybrid',
+    location: 'Toshkent + onlayn',
+    speakers: ['behruz', 'rustam'],
+    participants: 85,
+    topics: ['iqtisod', 'siyosat'],
+  },
+  {
+    slug: 'demokratiya-va-anana',
+    title: 'Demokratiya va anʼana: ular bir-biriga ziddmi?',
+    question: 'Milliy va diniy qadriyatlar demokratik institutlar bilan qanday uygʻunlashadi?',
+    summary: 'Islomiy liberal demokratiya loyihasi doirasidagi birinchi ochiq muhokama.',
+    takeaways: [
+      'Anʼana va demokratiya oʻrtasidagi munosabat institutlar dizayniga bogʻliq',
+      'Mahalla — milliy fuqarolik jamiyatining salohiyatli instituti',
+      'Ochiq muhokama madaniyatini maktabdan boshlab shakllantirish kerak',
+    ],
+    date: '2026-08-22T13:00:00.000Z',
+    format: 'online',
+    location: 'Zoom',
+    speakers: ['nodira', 'kamola'],
+    participants: 64,
+    topics: ['islom', 'siyosat'],
+  },
+]
+
+export type SeedWinner = {
+  place: '1' | '2' | '3' | 'special'
+  name: string
+  age: number
+  school: string
+  region: string
+  essayTitle: string
+  essayExcerpt: string
+  essay?: string
+}
+
+export type SeedCompetition = {
+  slug: string
+  number: number
+  title: string
+  prompt: string
+  description: string
+  startDate: string
+  deadline: string
+  minWords: number
+  maxWords: number
+  audience: string
+  judges: AuthorKey[]
+  topics: TopicSlug[]
+  acceptSubmissions: boolean
+  winners: SeedWinner[]
+  featured?: boolean
+}
+
+export const competitionRules = [
+  'Insho oʻzbek yoki ingliz tilida, muallifning oʻzi tomonidan yozilgan boʻlishi kerak',
+  'Sunʼiy intellekt yordamida yozilgan yoki koʻchirilgan matnlar qabul qilinmaydi',
+  'Barcha iqtiboslar uchun manba koʻrsatilishi shart',
+  'Bitta ishtirokchi bitta tanlovga bitta insho yuborishi mumkin',
+  'Gʻoliblar ishlari muallif roziligi bilan saytda eʼlon qilinadi',
+]
+
+export const competitionCriteria = [
+  { title: 'Gʻoyaning aniqligi va dolzarbligi', weight: 25 },
+  { title: 'Dalillar va manbalardan foydalanish', weight: 30 },
+  { title: 'Mantiqiy tuzilma', weight: 20 },
+  { title: 'Til va uslub', weight: 15 },
+  { title: 'Oʻziga xoslik', weight: 10 },
+]
+
+export const competitionPrizes = [
+  '1-oʻrin: sertifikat, 5 ta kitob toʻplami va mentor bilan individual sessiya',
+  '2–3-oʻrin: sertifikat va 3 ta kitob',
+  'Barcha gʻoliblar inshosi “Shon-sharaf zali”da eʼlon qilinadi',
+]
+
+export const competitions: SeedCompetition[] = [
+  {
+    slug: 'tanlov-12-raqamli-davrda-fuqarolik',
+    number: 12,
+    title: 'Raqamli davrda fuqarolik: erkinlik va masʼuliyat',
+    prompt: 'Ijtimoiy tarmoqlar fuqarolarga koʻproq ovoz berdimi yoki jamiyatni koʻproq boʻldimi? Oʻz fikringizni kamida ikkita manbaga tayanib asoslang.',
+    description: `Bu hafta biz raqamli maydondagi fuqarolik haqida yozamiz. Siz Mill, Habermas yoki boshqa mutafakkirlar gʻoyalaridan, shuningdek oʻz kuzatuvlaringizdan foydalanishingiz mumkin.
+
+## Yordamchi manbalar
+- Jon Styuart Mill, “Erkinlik haqida” (kutubxonamizda sharhi bor)
+- “Raqamli davrda jamoatchilik muhokamasi” maqolasi`,
+    startDate: '2026-11-09',
+    deadline: '2026-11-20T18:59:00.000Z',
+    minWords: 600,
+    maxWords: 1200,
+    audience: '14–24 yoshli oʻquvchi va talabalar',
+    judges: ['nodira', 'behruz', 'jasur'],
+    topics: ['siyosat', 'falsafa'],
+    acceptSubmissions: true,
+    winners: [],
+    featured: true,
+  },
+  {
+    slug: 'tanlov-11-forobiy-va-bugungi-jamiyat',
+    number: 11,
+    title: 'Forobiyning fozil shahri va bugungi jamiyat',
+    prompt: 'Forobiy taʼriflagan rahbar fazilatlaridan qaysi biri bugun eng muhim va nima uchun?',
+    description: 'Tanlov yakunlandi. Hakamlar insholarni baholamoqda — natijalar tez orada eʼlon qilinadi.',
+    startDate: '2026-11-02',
+    deadline: '2026-11-08T18:59:00.000Z',
+    minWords: 600,
+    maxWords: 1200,
+    audience: '14–24 yoshli oʻquvchi va talabalar',
+    judges: ['zarina', 'sardor'],
+    topics: ['meros', 'falsafa'],
+    acceptSubmissions: false,
+    winners: [],
+  },
+  {
+    slug: 'tanlov-10-talim-eng-yaxshi-investitsiya',
+    number: 10,
+    title: 'Taʼlim — eng yaxshi investitsiyami?',
+    prompt: 'Davlat cheklangan byudjetni taʼlimga koʻproq sarflashi kerakmi yoki infratuzilmaga? Iqtisodiy dalillar bilan javob bering.',
+    description: 'Iqtisodiyot yoʻnalishidagi tanlov: muqobil xarajat, inson kapitali va tashqi effektlar tushunchalaridan foydalanish tavsiya etildi.',
+    startDate: '2026-10-26',
+    deadline: '2026-11-01T18:59:00.000Z',
+    minWords: 600,
+    maxWords: 1200,
+    audience: '14–24 yoshli oʻquvchi va talabalar',
+    judges: ['rustam', 'malika'],
+    topics: ['iqtisod'],
+    acceptSubmissions: false,
+    winners: [
+      {
+        place: '1', name: 'Shahzoda Ortiqova', age: 17, school: 'Akademik litsey, 2-kurs', region: 'Samarqand viloyati',
+        essayTitle: 'Koʻprik ham, maktab ham: ikkalasi ham kerak, lekin ketma-ketlik muhim',
+        essayExcerpt: 'Yangi yoʻl qishloqni shaharga ulaydi, lekin oʻsha yoʻldan oʻtadigan bola nima bilan qaytishini maktab hal qiladi. Muqobil xarajat haqida gapirganda, biz faqat bugungi pulni emas, ertangi imkoniyatni ham hisoblashimiz kerak.',
+        essay: `Yangi yoʻl qishloqni shaharga ulaydi, lekin oʻsha yoʻldan oʻtadigan bola nima bilan qaytishini maktab hal qiladi. Muqobil xarajat haqida gapirganda, biz faqat bugungi pulni emas, ertangi imkoniyatni ham hisoblashimiz kerak.
+
+Iqtisodchilar taʼlimni “inson kapitali”ga investitsiya deb ataydi. Bilim va koʻnikma — bu ham kapital: u daromad keltiradi va yillar davomida oʻsadi. Biroq infratuzilmasiz bu kapital ishlay olmaydi: internet yoʻq joyda onlayn kurs, yoʻl yoʻq joyda universitet uzoq.
+
+Mening xulosam: savol “yoki-yoki” emas, “qay tartibda” degan savoldir. Maktablar, internet va yoʻllarni bitta hududiy rejada birlashtirgan davlat har bir soʻmdan eng koʻp natija oladi.`,
+      },
+      {
+        place: '2', name: 'Javohir Sobirov', age: 19, school: 'Universitet, 1-kurs', region: 'Toshkent shahri',
+        essayTitle: 'Tashqi effekt: nega bilimli qoʻshni hammamizga foyda',
+        essayExcerpt: 'Men oʻqiganimda faqat oʻzim emas, butun mahallam boyiydi. Bu — iqtisodchilar “ijobiy tashqi effekt” deb ataydigan hodisa va davlat aralashuvining eng kuchli asosi.',
+      },
+      {
+        place: '3', name: 'Nilufar Ahmedova', age: 16, school: 'Umumtaʼlim maktabi, 10-sinf', region: 'Qashqadaryo viloyati',
+        essayTitle: 'Bir oʻqituvchi — yuz oʻquvchi',
+        essayExcerpt: 'Yaxshi oʻqituvchiga sarflangan mablagʻ yuzlab oʻquvchi orqali koʻpayib qaytadi. Infratuzilma eskiradi, bilim esa meros boʻlib qoladi.',
+      },
+    ],
+  },
+  {
+    slug: 'tanlov-9-qonun-ustuvorligi',
+    number: 9,
+    title: 'Qonun ustuvorligi: kuchli davlatmi yoki kuchli jamiyat?',
+    prompt: 'Qonun ustuvorligini taʼminlash uchun nima muhimroq: kuchli davlat institutlarimi yoki faol fuqarolik jamiyati?',
+    description: 'Huquq va siyosat kesishmasidagi tanlov. Ishtirokchilar Acemoglu va Robinsonning “Tor yoʻlak” gʻoyasidan keng foydalanishdi.',
+    startDate: '2026-10-19',
+    deadline: '2026-10-25T18:59:00.000Z',
+    minWords: 600,
+    maxWords: 1200,
+    audience: '14–24 yoshli oʻquvchi va talabalar',
+    judges: ['dilshod', 'nodira'],
+    topics: ['huquq', 'siyosat'],
+    acceptSubmissions: false,
+    winners: [
+      {
+        place: '1', name: 'Madina Xolmatova', age: 20, school: 'Universitet, 2-kurs', region: 'Qoraqalpogʻiston Respublikasi',
+        essayTitle: 'Tor yoʻlakda yurish: davlat va jamiyat bir-birini kuchaytirganda',
+        essayExcerpt: 'Kuchli davlat jamiyatsiz — Leviafan, kuchli jamiyat davlatsiz — tartibsizlik. Qonun ustuvorligi ular bir-birini nazorat qilib, bir vaqtda kuchayib borganda tugʻiladi.',
+        essay: `Kuchli davlat jamiyatsiz — Leviafan, kuchli jamiyat davlatsiz — tartibsizlik. Qonun ustuvorligi ular bir-birini nazorat qilib, bir vaqtda kuchayib borganda tugʻiladi.
+
+Acemoglu va Robinson bu holatni “tor yoʻlak” deb ataydi. Yoʻlakdan chiqib ketish oson: davlat haddan tashqari kuchaysa, fuqarolar ovozi soʻnadi; jamiyat davlatni zaiflashtirsa, qonunni hech kim himoya qilmaydi.
+
+Bizning tariximizda bu muvozanatning namunalari bor. Mahalla oqsoqollari kengashi va qozilik sudlari mahalliy darajada adolatni taʼminlashga harakat qilgan. Bugungi vazifa — bu anʼanalarni mustaqil sud va shaffof qonunchilik bilan bogʻlash.`,
+      },
+      {
+        place: '2', name: 'Bekzod Yoʻldoshev', age: 18, school: 'Akademik litsey, 2-kurs', region: 'Andijon viloyati',
+        essayTitle: 'Qonun qogʻozda emas, odatda yashaydi',
+        essayExcerpt: 'Eng yaxshi qonun ham, agar odamlar unga ishonmasa, qogʻozda qoladi. Ishonch esa har kuni, kichik adolatli qarorlar orqali quriladi.',
+      },
+      {
+        place: '3', name: 'Sevinch Murodova', age: 15, school: 'Umumtaʼlim maktabi, 9-sinf', region: 'Navoiy viloyati',
+        essayTitle: 'Mahalladan boshlanadigan qonun ustuvorligi',
+        essayExcerpt: 'Qoʻshnilar oʻrtasidagi kichik nizoni adolatli hal qila oladigan jamiyat katta masalalarni ham hal qila oladi.',
+      },
+      {
+        place: 'special', name: 'Islom Qodirov', age: 17, school: 'Akademik litsey', region: 'Fargʻona viloyati',
+        essayTitle: 'Nizomulmulk maslahati: shikoyatni tinglaydigan davlat',
+        essayExcerpt: '“Siyosatnoma”da hukmdor xalq shikoyatini shaxsan tinglashi kerakligi aytiladi. Bugungi tilda bu — ochiq va tezkor murojaat tizimi.',
+      },
+    ],
+  },
+]
+
+export const settings = {
+  tagline: 'Ilm, tafakkur va meros maydoni',
+  description:
+    'AL-FOROB AVLODIDAN — yoshlar uchun siyosat, iqtisod, falsafa va milliy davlatchilik boʻyicha ochiq taʼlim va tadqiqot platformasi.',
+  announcement: '12-haftalik insho tanlovi davom etmoqda — topshirish muddati 20-noyabr',
+  hubQuestion: 'Erkinlik va anʼana: qaysi biri jamiyatni koʻproq mustahkamlaydi?',
+  hubQuestionContext:
+    'Bu haftaning munozarali savoli. Telegram guruhimizda oʻz fikringizni dalillar bilan yozing — eng asosli javoblar keyingi davra suhbatida muhokama qilinadi.',
+  hubRules: [
+    'Shaxsga emas, gʻoyaga eʼtiroz bildiring',
+    'Har bir daʼvoni dalil yoki manba bilan asoslang',
+    'Avval tinglang, keyin javob bering',
+    'Fikringizni oʻzgartirishdan qoʻrqmang — bu kuchsizlik emas',
+    'Haqorat, nafrat tili va yolgʻon axborotga yoʻl yoʻq',
+  ],
+}
+
+export const about = {
+  intro:
+    '“AL-FOROB AVLODIDAN” — Abu Nasr Forobiy ilmiy merosidan ilhomlangan yoshlar loyihasi. Biz siyosat, iqtisod, falsafa va huquq boʻyicha sifatli bilimni oʻzbek tilida ochiq qilish va asosli munozara madaniyatini shakllantirishni maqsad qilganmiz.',
+  manifesto: `## Nega “Forob avlodidan”?
+Ming yildan ortiq vaqt oldin Forob shahrida tugʻilgan Abu Nasr Forobiy butun dunyo ilm-faniga taʼsir koʻrsatdi. Biz oʻzimizni shu ilmiy anʼana davomchilari deb bilamiz: bilimga chanqoq, savol berishdan qoʻrqmaydigan va jamiyat manfaatini oʻylaydigan avlod.
+
+## Biz nimaga ishonamiz
+- **Bilim — hammaning haqi.** Shahar yoki qishloqda yashashingizdan qatʼi nazar, sifatli manbalarga kirish imkoni boʻlishi kerak.
+- **Munozara — tafakkur maktabi.** Fikrlar dalillar bilan raqobatlashganda haqiqat ravshanlashadi.
+- **Meros va zamonaviylik bir-birini toʻldiradi.** Forobiy, Nizomulmulk va Ibn Xaldun gʻoyalari bugungi savollarga ham javob bera oladi.
+- **Yoshlar — tomoshabin emas, muallif.** Har bir ishtirokchi oʻz maqolasi, tahlilnomasi va inshosi bilan jamiyatga hissa qoʻsha oladi.
+
+## Biz nima qilamiz
+Akademik kurslar, ochiq tadqiqotlar, raqamli kutubxona, oylik davra suhbatlari va haftalik yozuv tanlovlari orqali yoshlarni bilim va mulohaza atrofida birlashtiramiz.`,
+  mission:
+    'Oʻzbekiston yoshlarini siyosat, iqtisod va falsafa boʻyicha ishonchli bilim bilan taʼminlash, ularda tanqidiy fikrlash va ilmiy yozish koʻnikmalarini rivojlantirish.',
+  vision:
+    'Shahar va qishloq yoshlari teng imkoniyat bilan ilm oladigan, gʻoyalar erkin va asosli muhokama qilinadigan bilimga asoslangan jamiyat.',
+  values: [
+    { title: 'Ilmiy halollik', text: 'Manbaga hurmat, dalilga tayanish va xatoni tan olish.' },
+    { title: 'Ochiqlik', text: 'Bilim va muhokamalar hamma uchun ochiq va bepul.' },
+    { title: 'Hurmat', text: 'Fikri boshqacha boʻlgan insonni tinglash va hurmat qilish.' },
+    { title: 'Meros', text: 'Milliy ilmiy anʼanani qadrlash va uni zamonaviy tilda davom ettirish.' },
+  ],
+  faq: [
+    { q: 'Loyihada qatnashish pullikmi?', a: 'Yoʻq. Barcha kurslar, kutubxona va tanlovlar bepul.' },
+    { q: 'Kimlar ishtirok etishi mumkin?', a: 'Asosan 14–24 yoshli oʻquvchi va talabalar, lekin materiallardan hamma foydalanishi mumkin.' },
+    { q: 'Oʻz maqolamni qanday eʼlon qilaman?', a: '“Aloqa” formasida “Maqola/tahlilnoma yuborish” turini tanlang. Tahririyat 2 hafta ichida javob beradi.' },
+    { q: 'Mentor yoki koʻngilli boʻlish mumkinmi?', a: 'Albatta. Aloqa formasi orqali yozing va oʻzingiz haqingizda qisqacha maʼlumot qoldiring.' },
+    { q: 'Kitoblarning toʻliq matnini qayerdan olaman?', a: 'Mualliflik huquqi bilan himoyalangan kitoblar uchun “Qayerdan topish” havolasi berilgan. Ommaviy mulkdagi mumtoz asarlarga toʻgʻridan-toʻgʻri havola bor.' },
+  ],
+}
