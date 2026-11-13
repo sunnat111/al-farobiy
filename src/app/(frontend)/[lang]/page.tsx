@@ -10,6 +10,7 @@ import { MediaImg, SectionHeader } from '@/components/ui'
 import { Countdown } from '@/components/interactive'
 import { TopicIcon } from '@/components/TopicIcon'
 import { isPast } from '@/lib/format'
+import { withBase } from '@/lib/site'
 
 function Highlight({ text, word }: { text: string; word?: string | null }) {
   if (!word || !text.includes(word)) return <>{text}</>
@@ -93,7 +94,7 @@ export default async function Home({ params }: { params: Promise<{ lang: Locale 
               <Highlight text={home.hero?.title ?? settings.siteName} word={home.hero?.highlight} />
             </h1>
             {home.hero?.subtitle && <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-lapis-100">{home.hero.subtitle}</p>}
-            <form action={href.search(lang)} className="mt-8 flex max-w-xl items-center gap-2 rounded-full bg-white p-1.5 pl-5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]">
+            <form action={withBase(href.search(lang))} className="mt-8 flex max-w-xl items-center gap-2 rounded-full bg-white p-1.5 pl-5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]">
               <Search className="h-5 w-5 shrink-0 text-muted" />
               <input name="q" placeholder={t.common.searchPlaceholder} className="min-w-0 flex-1 bg-transparent py-2 text-[15px] text-ink outline-none" />
               <button className="btn-lapis shrink-0">{t.common.search}</button>

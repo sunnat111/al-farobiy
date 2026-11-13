@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
+import { BASE_PATH } from '@/lib/site'
 import React, { useEffect, useRef, useState } from 'react'
 import { ChevronDown, Menu, PenLine, Search, X, ArrowRight } from 'lucide-react'
 import { Wordmark } from './Logo'
@@ -32,7 +33,6 @@ export function HeaderClient({
   const [mobileGroup, setMobileGroup] = useState<string | null>(null)
   const ref = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
-  const router = useRouter()
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
@@ -73,7 +73,8 @@ export function HeaderClient({
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const q = new FormData(e.currentTarget).get('q')
-    router.push(`${searchHref}?q=${encodeURIComponent(String(q ?? ''))}`)
+    // full page load: also works on the static snapshot, which has no server to answer client navigation
+    window.location.href = `${BASE_PATH}${searchHref}?q=${encodeURIComponent(String(q ?? ''))}`
   }
 
   return (

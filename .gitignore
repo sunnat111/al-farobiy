@@ -56,3 +56,7 @@ node_modules/
 *.db-shm
 __pycache__/
 venv/
+
+# static snapshot build (GitHub Pages)
+/.next-static/
+/out/

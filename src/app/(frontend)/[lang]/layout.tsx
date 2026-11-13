@@ -9,6 +9,8 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { isLocale, locales } from '@/i18n/dict'
 import { getGlobal } from '@/lib/payload'
+import { STATIC_DEMO, withBase } from '@/lib/site'
+import { StaticNav } from '@/components/StaticNav'
 import type { SiteSetting } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
@@ -25,8 +27,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'),
     title: { default: `${s.siteName} — ${s.tagline ?? ''}`, template: `%s · ${s.siteName}` },
     description: s.description ?? undefined,
-    icons: { icon: '/favicon.svg' },
-    alternates: { languages: { uz: '/uz', en: '/en' } },
+    icons: { icon: withBase('/favicon.svg') },
+    alternates: { languages: { uz: withBase('/uz'), en: withBase('/en') } },
     openGraph: { siteName: s.siteName, type: 'website', locale: lang === 'uz' ? 'uz_UZ' : 'en_US' },
   }
 }
@@ -40,6 +42,7 @@ export default async function RootLayout({ children, params }: { children: React
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-white focus:px-3 focus:py-2">
           Skip
         </a>
+        {STATIC_DEMO && <StaticNav />}
         <Header locale={lang} />
         <main id="main">{children}</main>
         <Footer locale={lang} />

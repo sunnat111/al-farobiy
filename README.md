@@ -84,6 +84,19 @@ Set `PAYLOAD_SECRET`, `DATABASE_URL` and `NEXT_PUBLIC_SERVER_URL` in the environ
 
 For a serverless host such as Vercel, switch to Postgres (`@payloadcms/db-postgres`) and a cloud storage adapter for uploads (e.g. `@payloadcms/storage-s3` or Vercel Blob), then use Payload migrations instead of the automatic schema push.
 
+### Read-only preview on GitHub Pages
+
+GitHub Pages only serves static files (no server, no database), so it hosts a **snapshot** of the site:
+every page, menu, filter, search, quiz and countdown works, but forms show a "demo" notice and there is no admin panel.
+
+```bash
+pnpm export:static          # builds ./out for https://sunnat111.github.io/al-farobiy/
+```
+
+The snapshot is published on the `gh-pages` branch. To update it after changing content, run the export again and
+replace the contents of the `gh-pages` branch with `./out`. (`BASE_PATH` and `SITE_URL` env vars change the target path.)
+Note that the snapshot is frozen at export time — e.g. a competition shown as "open" stays open until you re-export.
+
 ## Project layout
 
 ```

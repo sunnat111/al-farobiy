@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { Check, RotateCcw, X } from 'lucide-react'
 
@@ -96,8 +96,6 @@ export function Quiz({ questions, labels }: { questions: Q[]; labels: { check: s
 
 /** A <select> that updates the URL query string on change (library filters). */
 export function FilterSelect({ name, value, options, label }: { name: string; value: string; options: { value: string; label: string }[]; label: string }) {
-  const router = useRouter()
-  const pathname = usePathname()
   const params = useSearchParams()
   return (
     <label className="block">
@@ -109,8 +107,8 @@ export function FilterSelect({ name, value, options, label }: { name: string; va
           const p = new URLSearchParams(params?.toString())
           if (e.target.value) p.set(name, e.target.value)
           else p.delete(name)
-          p.delete('sahifa')
-          router.push(`${pathname}?${p.toString()}`, { scroll: false })
+          // update the URL in place; the list filters itself in the browser (works on static hosting too)
+          window.history.pushState(null, '', `${window.location.pathname}${p.size ? `?${p}` : ''}`)
         }}
       >
         {options.map((o) => (
@@ -145,5 +143,22 @@ export function ShareButton({ label }: { label: string }) {
     >
       {copied ? '✓' : label}
     </button>
+  )
+}
+
+/** Link that only changes the query string in place (no page request). */
+export function QueryLink({ query, className, children }: { query: string; className?: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={query || '?'}
+      data-query-link=""
+      className={className}
+      onClick={(e) => {
+        e.preventDefault()
+        window.history.pushState(null, '', `${window.location.pathname}${query}`)
+      }}
+    >
+      {children}
+    </a>
   )
 }

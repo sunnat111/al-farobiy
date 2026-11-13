@@ -4,8 +4,23 @@ import React, { useActionState, useState } from 'react'
 import { CheckCircle2, Send } from 'lucide-react'
 import { submitEssay, submitMessage, submitProposal, type FormState } from '@/app/(frontend)/actions'
 import type { Locale } from '@/i18n/dict'
+import { STATIC_DEMO } from '@/lib/site'
 
 const L = (locale: Locale, uz: string, en: string) => (locale === 'en' ? en : uz)
+
+/** In the read-only GitHub Pages snapshot there is no server, so forms explain that instead of sending. */
+const demoAction = (locale: Locale) => async (): Promise<FormState> => ({
+  ok: false,
+  message: L(
+    locale,
+    'Bu sahifaning namoyish (demo) nusxasi — formalar hozircha yuborilmaydi. Toʻliq versiyada maʼlumot admin panelga tushadi.',
+    'This is a read-only demo copy — forms are not sent yet. In the full version submissions go to the admin panel.',
+  ),
+})
+
+function useFormAction(real: (s: FormState, fd: FormData) => Promise<FormState>, locale: Locale) {
+  return useActionState(STATIC_DEMO ? demoAction(locale) : real, null)
+}
 
 function Field({ name, label, error, children, hint }: { name: string; label: string; error?: string; children: React.ReactNode; hint?: React.ReactNode }) {
   return (
@@ -43,7 +58,7 @@ function Success({ message }: { message: string }) {
 }
 
 export function EssayForm({ locale, competitionId, minWords, maxWords }: { locale: Locale; competitionId: number; minWords: number; maxWords: number }) {
-  const [state, action, pending] = useActionState(submitEssay, null)
+  const [state, action, pending] = useFormAction(submitEssay, locale)
   const [words, setWords] = useState(0)
   if (state?.ok) return <Success message={state.message} />
   const e = state?.errors ?? {}
@@ -113,7 +128,7 @@ export function EssayForm({ locale, competitionId, minWords, maxWords }: { local
 }
 
 export function ProposalForm({ locale }: { locale: Locale }) {
-  const [state, action, pending] = useActionState(submitProposal, null)
+  const [state, action, pending] = useFormAction(submitProposal, locale)
   if (state?.ok) return <Success message={state.message} />
   const e = state?.errors ?? {}
   return (
@@ -148,7 +163,7 @@ export function ProposalForm({ locale }: { locale: Locale }) {
 }
 
 export function ContactForm({ locale }: { locale: Locale }) {
-  const [state, action, pending] = useActionState(submitMessage, null)
+  const [state, action, pending] = useFormAction(submitMessage, locale)
   if (state?.ok) return <Success message={state.message} />
   const e = state?.errors ?? {}
   return (

@@ -6,6 +6,7 @@ import type { Book, ClassicalText, Publication } from '@/payload-types'
 import { getDict, type Locale } from '@/i18n/dict'
 import { count, find } from '@/lib/payload'
 import { href } from '@/lib/links'
+import { withBase } from '@/lib/site'
 import { BookCard, ClassicCard, LibraryTile, PaperCard } from '@/components/cards'
 import { PageHero, SectionHeader } from '@/components/ui'
 
@@ -40,7 +41,7 @@ export default async function LibraryPage({ params }: { params: Promise<{ lang: 
         }
         crumbs={[{ label: t.siteName, href: href.home(lang) }, { label: t.nav.library }]}
       >
-        <form action={`/${lang}/qidiruv`} className="mt-7 flex max-w-xl items-center gap-2 rounded-full bg-white p-1.5 pl-5">
+        <form action={withBase(href.search(lang))} className="mt-7 flex max-w-xl items-center gap-2 rounded-full bg-white p-1.5 pl-5">
           <input name="q" placeholder={t.common.searchPlaceholder} className="min-w-0 flex-1 bg-transparent py-2 text-[15px] text-ink outline-none" />
           <button className="btn-lapis shrink-0">{t.common.search}</button>
         </form>

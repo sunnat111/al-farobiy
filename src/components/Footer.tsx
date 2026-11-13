@@ -5,6 +5,7 @@ import { InstagramIcon as Instagram, YoutubeIcon as Youtube } from './BrandIcons
 import { getDict, type Locale } from '@/i18n/dict'
 import { href } from '@/lib/links'
 import { getGlobal } from '@/lib/payload'
+import { STATIC_DEMO } from '@/lib/site'
 import type { SiteSetting } from '@/payload-types'
 import { Wordmark } from './Logo'
 
@@ -95,9 +96,11 @@ export async function Footer({ locale }: { locale: Locale }) {
           </span>
           <span className="flex items-center gap-4">
             <span className="text-lapis-400">{t.common.demoNote}</span>
-            <Link href="/admin" className="hover:text-white">
-              {t.footer.admin}
-            </Link>
+            {!STATIC_DEMO && (
+              <a href="/admin" className="hover:text-white">
+                {t.footer.admin}
+              </a>
+            )}
           </span>
         </div>
       </div>
