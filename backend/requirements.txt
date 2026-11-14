@@ -1,0 +1,16 @@
+# Web framework + server
+fastapi==0.162.7
+uvicorn[standard]==0.54.0
+python-multipart==0.0.33     # form uploads (admin panel)
+# Database
+SQLAlchemy[asyncio]==2.1.8   # [asyncio] adds greenlet, needed by the admin panel
+# Admin panel
+sqladmin==0.32.0
+itsdangerous==2.2.0          # signed session cookie for admin login
+babel==2.18.0                # admin interface translations (Uzbek)
+# Files and images
+fastapi-storages==0.5.0
+pillow==13.0.0
+# Rich text
+Markdown==3.11.3             # demo content is written in Markdown, stored as HTML
+nh3==0.3.7                   # cleans HTML before it reaches the website

@@ -1,0 +1,158 @@
+{
+  "topics": [
+    {
+      "slug": "siyosat",
+      "uz": "Siyosat va davlat boshqaruvi",
+      "en": "Politics & Governance",
+      "color": "lapis",
+      "icon": "landmark",
+      "desc": "Davlat, hokimiyat, institutlar va siyosiy rejimlar haqida."
+    },
+    {
+      "slug": "iqtisod",
+      "uz": "Iqtisodiyot va rivojlanish",
+      "en": "Economics & Development",
+      "color": "emerald",
+      "icon": "coins",
+      "desc": "Bozor tamoyillari, iqtisodiy tahlil va davlat siyosati."
+    },
+    {
+      "slug": "falsafa",
+      "uz": "Falsafa va axloq",
+      "en": "Philosophy & Ethics",
+      "color": "plum",
+      "icon": "book-open",
+      "desc": "Mumtoz va zamonaviy siyosiy falsafa, adolat va erkinlik."
+    },
+    {
+      "slug": "huquq",
+      "uz": "Huquq va adolat",
+      "en": "Law & Justice",
+      "color": "terracotta",
+      "icon": "scale",
+      "desc": "Qonun ustuvorligi, konstitutsionalizm va inson huquqlari."
+    },
+    {
+      "slug": "islom",
+      "uz": "Islom va zamonaviylik",
+      "en": "Islam & Modernity",
+      "color": "turquoise",
+      "icon": "moon-star",
+      "desc": "Islomiy qadriyatlar, fuqarolik jamiyati va zamonaviy dunyo."
+    },
+    {
+      "slug": "meros",
+      "uz": "Milliy davlatchilik va meros",
+      "en": "Statehood & Heritage",
+      "color": "gold",
+      "icon": "flag",
+      "desc": "Forobiy, Nizomulmulk, Amir Temur va boshqaruv anʼanalari."
+    }
+  ],
+  "authors": [
+    {
+      "key": "jasur",
+      "name": "Jasur Karimov",
+      "kind": "team",
+      "position": "Loyiha asoschisi va bosh muharrir",
+      "region": "Toshkent",
+      "bio": "Siyosatshunos. Yoshlar oʻrtasida tanqidiy fikrlash va ilmiy munozara madaniyatini rivojlantirish gʻoyasi bilan “AL-FOROB AVLODIDAN” loyihasini boshlagan."
+    },
+    {
+      "key": "malika",
+      "name": "Malika Yusupova",
+      "kind": "team",
+      "position": "Akademik dasturlar rahbari",
+      "region": "Toshkent",
+      "bio": "Taʼlim dasturlari dizayneri. Kurslar tuzilmasi, darslar va baholash tizimi uchun masʼul."
+    },
+    {
+      "key": "behruz",
+      "name": "Behruz Toshpoʻlatov",
+      "kind": "team",
+      "position": "Virtual Hub koordinatori",
+      "region": "Samarqand",
+      "bio": "Davra suhbatlari va onlayn muhokamalarni tashkil etadi, shahar va qishloq yoshlarini bir maydonga jamlaydi."
+    },
+    {
+      "key": "nodira",
+      "name": "Dr. Nodira Saidova",
+      "kind": "mentor",
+      "position": "Siyosatshunoslik boʻyicha mentor",
+      "region": "Toshkent",
+      "bio": "Qiyosiy siyosat va davlat boshqaruvi boʻyicha tadqiqotchi. “Siyosatshunoslikka kirish” va “Qiyosiy boshqaruv” kurslarini olib boradi."
+    },
+    {
+      "key": "rustam",
+      "name": "Dr. Rustam Ergashev",
+      "kind": "mentor",
+      "position": "Iqtisodiyot boʻyicha mentor",
+      "region": "Buxoro",
+      "bio": "Rivojlanish iqtisodiyoti va institutlar nazariyasi bilan shugʻullanadi. Mikroiqtisodiyot kursining muallifi."
+    },
+    {
+      "key": "dilshod",
+      "name": "Dilshod Mirzayev",
+      "kind": "mentor",
+      "position": "Huquqshunos, mentor",
+      "region": "Namangan",
+      "bio": "Konstitutsiyaviy huquq va qonun ustuvorligi masalalari boʻyicha maslahatchi."
+    },
+    {
+      "key": "zarina",
+      "name": "Zarina Abdullayeva",
+      "kind": "researcher",
+      "position": "Tadqiqotchi — siyosiy falsafa",
+      "region": "Toshkent",
+      "bio": "Forobiy va mumtoz siyosiy falsafani zamonaviy nazariyalar bilan qiyoslab oʻrganadi."
+    },
+    {
+      "key": "sardor",
+      "name": "Sardor Nematov",
+      "kind": "researcher",
+      "position": "Tadqiqotchi — tarix va davlatchilik",
+      "region": "Qarshi",
+      "bio": "Markaziy Osiyo davlatchilik tarixi, “Siyosatnoma” va “Temur tuzuklari” matnlari tadqiqotchisi."
+    },
+    {
+      "key": "kamola",
+      "name": "Kamola Ismoilova",
+      "kind": "researcher",
+      "position": "Tadqiqotchi — Islom tafakkuri",
+      "region": "Andijon",
+      "bio": "Islomiy qadriyatlar, fuqarolik jamiyati va demokratik institutlar oʻrtasidagi munosabatni oʻrganadi."
+    },
+    {
+      "key": "islom",
+      "name": "Islom Qodirov",
+      "kind": "student",
+      "position": "Akademik litsey talabasi",
+      "region": "Fargʻona",
+      "bio": "Debat klubi aʼzosi, siyosiy tahlilnomalar muallifi."
+    },
+    {
+      "key": "madina",
+      "name": "Madina Xolmatova",
+      "kind": "student",
+      "position": "Talaba, xalqaro munosabatlar",
+      "region": "Nukus",
+      "bio": "Falsafa va taʼlim siyosatiga qiziqadi. Haftalik tanlovlar gʻolibi."
+    },
+    {
+      "key": "aziz",
+      "name": "Aziz Rahmonov",
+      "kind": "student",
+      "position": "Talaba, iqtisodiyot",
+      "region": "Xorazm",
+      "bio": "Yoshlar tadbirkorligi va ochiq byudjet mavzularida yozadi."
+    },
+    {
+      "key": "shuhrat",
+      "name": "Prof. Shuhrat Alimov",
+      "kind": "guest",
+      "position": "Mehmon spiker, tarix fanlari doktori",
+      "region": "Samarqand",
+      "bio": "Oʻrta asrlar Movarounnahr ilmiy merosi boʻyicha mutaxassis."
+    }
+  ]
+}

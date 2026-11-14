@@ -5,15 +5,24 @@ The structure follows the client's six menu sections and the Yaqeen Institute te
 
 **Status:** MVP for client review. All content is demo content (people, winners and contacts are fictional placeholders; book entries are real books with editorial annotations).
 
-## What's inside
+## How the project is built
 
-| Part | Tech |
-| --- | --- |
-| Website | Next.js 16 (App Router), React 19, Tailwind CSS 4 |
-| Admin panel + API | Payload CMS 3, mounted at `/admin` in the same app |
-| Database | SQLite file for the MVP (swap to Postgres for production) |
-| Images | Uploaded through the admin panel, resized automatically (WebP) |
-| Languages | Uzbek (default, `/uz`) and English (`/en`); every text field can be translated in the admin |
+Two separate programs that talk over a REST API:
+
+```
+Browser ──▶ Website (Next.js / React, JavaScript) ──REST API──▶ Backend (FastAPI, Python) ──▶ SQLite database
+            port 3000, folder ./                                 port 8000, folder ./backend
+                                                                 also serves /admin (admin panel) and /media (uploads)
+```
+
+| Part | Language | Tech |
+| --- | --- | --- |
+| Website | JavaScript | Next.js 16 (React framework), React 19, Tailwind CSS 4 |
+| Backend + REST API | Python 3.10+ | FastAPI, SQLAlchemy 2, Pydantic |
+| Admin panel | Python | SQLAdmin (fully in Uzbek), Quill rich-text editor |
+| Database | — | SQLite file for the MVP (PostgreSQL for production) |
+| Images | — | Uploaded in the admin panel, resized to WebP automatically (Pillow) |
+| Languages | — | Uzbek (default, `/uz`) and English (`/en`); every text field has an "(EN)" version in the admin |
 
 ### Site map
 
@@ -28,84 +37,111 @@ The structure follows the client's six menu sections and the Yaqeen Institute te
 | 6. Loyiha haqida — manifesto, mission, team, FAQ, contact form | `/uz/loyiha` |
 | Topic pages, author pages, search | `/uz/mavzular/[slug]`, `/uz/mualliflar/[slug]`, `/uz/qidiruv` |
 
-## Run locally
+## Run it on your computer
 
-Requires Node.js 22+ and pnpm.
+You need **Python 3.10 or newer** (`python3 --version`), **Node.js 22+** and **pnpm** (`npm install -g pnpm`).
+Use two terminal windows: one for the backend, one for the website.
+
+### 1. Backend (Python)
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env               # then set SECRET_KEY to a long random string
+python -m app.seed                 # creates the database with the demo content and an admin user
+uvicorn app.main:app --reload --port 8000
+```
+
+- Admin panel: <http://localhost:8000/admin> — demo login `admin@alforob.uz` / `alforob-demo-2026` (**change it**, or set `ADMIN_EMAIL` / `ADMIN_PASSWORD` in `.env` before seeding)
+- Interactive API documentation: <http://localhost:8000/docs>
+- `python -m app.seed` wipes and recreates all content (admin users are kept).
+
+### 2. Website (JavaScript)
 
 ```bash
 pnpm install
-cp .env.example .env        # then set PAYLOAD_SECRET to a long random string
-pnpm seed                   # creates the database, demo content and an admin user
-pnpm dev                    # http://localhost:3000
+cp .env.example .env               # API_URL=http://localhost:8000
+pnpm dev
 ```
 
-Admin panel: <http://localhost:3000/admin>
-Demo login: `admin@alforob.uz` / `alforob-demo-2026` — **change it** (or set `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` before seeding).
+Open <http://localhost:3000>. The backend must be running, because every page gets its data from it.
 
-`pnpm seed` wipes and recreates all content (users are kept). Generated demo images are cached in `seed-assets/`.
+## The REST API
+
+| Method | Address | What it returns |
+| --- | --- | --- |
+| GET | `/api/{collection}?locale=uz&sort=-publishedDate&limit=10&…` | List: `{docs, totalDocs}`. Collections: `courses`, `publications`, `books`, `classical-texts`, `sessions`, `competitions`, `topics`, `authors`. Filters: `kind`, `series`, `category`, `featured`, `topic`, `author`, `exclude` |
+| GET | `/api/{collection}/{slug}?locale=en` | One item |
+| GET | `/api/globals/{site-settings\|home-page\|about-page}` | Settings pages |
+| GET | `/api/stats` | Counts for the home page |
+| POST | `/api/forms/essay`, `/api/forms/proposal`, `/api/forms/message` | Saves a form; returns `{ok, message, errors}` |
+
+Only published items are returned. All form rules (required fields, word limits, deadline, one essay per email) are checked in Python in `backend/app/api/forms.py`.
 
 ## Admin panel guide (for the client)
 
-Everything on the site is editable in `/admin`. Section names in the left menu match the site:
+Everything on the site is editable at `/admin`. The left menu follows the site:
 
 | Admin group | What it controls |
 | --- | --- |
-| Akademik dasturlar → Kurslar | Courses: description, outcomes, lessons (with optional YouTube link), readings from the library, quiz |
-| Tadqiqot va nazariya → Nashrlar | One place for research papers, articles, journal picks and policy briefs. The **Turi** (type) field decides where it appears on the site |
-| Kutubxona → Zamonaviy kitoblar / Mumtoz asarlar | Book catalogue (cover, summary, “where to find” link, optional PDF) and classical texts with commentary |
-| Virtual Hub → Davra suhbatlari / Muhokama uchun takliflar | Roundtables (date, speakers, takeaways, recording) and topic proposals sent from the site |
-| Musobaqalar → Haftalik tanlovlar / Topshirilgan insholar | Competitions (prompt, deadline, word limits, rules, winners) and essays submitted through the site, with status and score |
-| Umumiy maʼlumotlar | Authors & team, topics, media library, home page hero, About page, site settings (announcement bar, contacts, social links, question of the week) |
-| Murojaatlar → Aloqa xabarlari | Messages from the contact form |
-| Tizim → Admin foydalanuvchilar | Admin accounts. Roles: **Administrator** (everything) and **Muharrir** (content) |
+| Akademik dasturlar → Kurslar, Darslar, Test savollari | Courses; their lessons (with optional YouTube link) and quiz questions are separate lists linked to a course |
+| Tadqiqot va nazariya → Nashrlar | Research papers, articles, journal picks and policy briefs. **Turi** (type) decides where it appears |
+| Kutubxona → Zamonaviy kitoblar, Mumtoz asarlar | Book catalogue and classical texts with commentary |
+| Virtual Hub → Davra suhbatlari, Muhokama uchun takliflar | Roundtables and topic proposals sent from the site |
+| Musobaqalar → Haftalik tanlovlar, Gʻoliblar, Topshirilgan insholar | Competitions, their winners (shown in the Hall of Fame), essays submitted from the site |
+| Umumiy maʼlumotlar | Authors & team, topics, home page banner, About page, site settings (announcement bar, contacts, social links, question of the week) |
+| Murojaatlar → Aloqa xabarlari | Contact form messages |
+| Tizim → Admin foydalanuvchilar | Accounts (only for Administrators). Roles: **Administrator** and **Muharrir** (editor) |
 
-- **Save Draft** keeps a change hidden; **Publish changes** puts it on the site immediately.
-- Use the **Locale** switch (top right) to enter English text. Empty English fields fall back to Uzbek.
-- Winners added to a competition appear automatically in the Hall of Fame and on the home page.
+- **Holati** (status): "Eʼlon qilingan" shows on the site, "Qoralama" (draft) hides it.
+- Fields marked **(EN)** hold the English text; if empty, the Uzbek text is shown on the English site.
+- Fields marked "Har qatorga bittadan" take one item per line; "chap qism | oʻng qism" fields take two parts separated by `|`.
 
 ## Placeholders to replace before launch
 
 - Contacts and social links in **Sayt sozlamalari** (`info@alforob.uz`, phone, Telegram/Instagram/YouTube handles are placeholders).
 - All authors, team members, competition winners and their essays (fictional).
 - Generated artwork (covers, portraits, avatars) — replace with real photos and covers via the admin.
-- The “Demo kontent” note in the footer (`src/i18n/dict.ts`, `common.demoNote`).
-- Only upload full PDFs of modern books if the project holds the rights; otherwise keep the “where to find” link.
+- The "Demo kontent" note in the footer (`src/i18n/dict.js`, `common.demoNote`).
+- Only upload full PDFs of modern books if the project holds the rights; otherwise keep the "where to find" link.
 
 ## Deploying
 
-The MVP runs anywhere Node.js runs with a persistent disk (VPS, Railway, Render, Fly.io):
+Both parts need a server (e.g. a VPS, Railway or Render):
 
-```bash
-pnpm build
-pnpm start
-```
-
-Set `PAYLOAD_SECRET`, `DATABASE_URL` and `NEXT_PUBLIC_SERVER_URL` in the environment, and keep the database file and the `media/` folder on persistent storage.
-
-For a serverless host such as Vercel, switch to Postgres (`@payloadcms/db-postgres`) and a cloud storage adapter for uploads (e.g. `@payloadcms/storage-s3` or Vercel Blob), then use Payload migrations instead of the automatic schema push.
+- **Backend:** `uvicorn app.main:app --host 0.0.0.0 --port 8000`, with `SECRET_KEY`, `DATABASE_URL`, `PUBLIC_URL` (the backend's public address, used in image links) and `FRONTEND_URL` set. Keep the database file and `backend/media/` on persistent storage, or use PostgreSQL. For schema changes in production, add Alembic migrations.
+- **Website:** `pnpm build && pnpm start`, with `API_URL` pointing to the backend.
 
 ### Read-only preview on GitHub Pages
 
-GitHub Pages only serves static files (no server, no database), so it hosts a **snapshot** of the site:
-every page, menu, filter, search, quiz and countdown works, but forms show a "demo" notice and there is no admin panel.
+GitHub Pages only serves static files (no server, no database), so it hosts a **snapshot**: every page, menu, filter, search, quiz and countdown works, but forms show a "demo" notice and there is no admin panel.
 
 ```bash
-pnpm export:static          # builds ./out for https://sunnat111.github.io/al-farobiy/
+pnpm export:static          # backend must be running; builds ./out for https://sunnat111.github.io/al-farobiy/
 ```
 
-The snapshot is published on the `gh-pages` branch. To update it after changing content, run the export again and
-replace the contents of the `gh-pages` branch with `./out`. (`BASE_PATH` and `SITE_URL` env vars change the target path.)
-Note that the snapshot is frozen at export time — e.g. a competition shown as "open" stays open until you re-export.
+The snapshot is published on the `gh-pages` branch; to update it, run the export and replace that branch's contents with `./out`.
+The snapshot is frozen at export time — e.g. a competition shown as "open" stays open until you re-export.
 
 ## Project layout
 
 ```
-src/
-  app/(frontend)/[lang]/   public site pages (uz / en)
-  app/(frontend)/actions.ts  form handlers (essay, proposal, contact)
-  app/(payload)/            admin panel + REST/GraphQL API (generated by Payload)
-  collections/, globals/    CMS content model (labels in Uzbek)
-  components/               UI: header, footer, cards, forms, rich text
-  i18n/dict.ts              interface texts in Uzbek and English
-  seed/                     demo content and generated artwork
+backend/                     Python
+  app/main.py                FastAPI app: mounts /api, /admin, /media
+  app/models.py              database tables (SQLAlchemy)
+  app/api/content.py         read endpoints (lists, single items, settings, stats)
+  app/api/serialize.py       database rows -> JSON for the website
+  app/api/forms.py           form endpoints with all validation rules
+  app/admin/                 admin panel screens, login, Uzbek translation, editor
+  app/seed.py + seed_data/   demo content loader
+  seed-assets/               demo images
+src/                         JavaScript (Next.js / React)
+  app/(frontend)/[lang]/     pages, one folder per URL
+  app/(frontend)/actions.js  sends forms to the backend
+  lib/api.js                 every call to the backend goes through here
+  components/                header, footer, cards, forms, filters, rich text
+  i18n/dict.js               interface texts in Uzbek and English
+scripts/export-static.mjs    GitHub Pages snapshot
 ```

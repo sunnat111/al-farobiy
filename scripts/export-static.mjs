@@ -8,7 +8,8 @@
  * How it works: builds the app with basePath + "static demo" mode into .next-static, starts it,
  * crawls every page reachable from /uz and /en, saves the HTML, then copies JS/CSS, fonts and
  * uploaded media next to it. Forms and the admin panel need a server, so they are disabled
- * in the snapshot. Content comes from the local database — run `pnpm seed` first if it is empty.
+ * in the snapshot. Content comes from the Python backend, which must be running (see README):
+ *   cd backend && .venv/bin/uvicorn app.main:app --port 8000
  */
 import { spawn, execSync } from 'node:child_process'
 import fs from 'node:fs'
@@ -27,7 +28,6 @@ const env = {
   NEXT_PUBLIC_STATIC_DEMO: '1',
   NEXT_PUBLIC_SERVER_URL: SITE_URL,
   NEXT_DIST_DIR: DIST,
-  NODE_OPTIONS: '--no-deprecation --max-old-space-size=8000',
 }
 
 const log = (...a) => console.log('[export]', ...a)
@@ -55,10 +55,10 @@ async function waitForServer() {
   throw new Error('server did not start')
 }
 
-/** Rewrite URLs that Next.js does not prefix by itself (uploaded media). */
+/** Image and file addresses point at the backend (http://localhost:8000/media/…); point them at the copied files instead. */
+const MEDIA_ORIGIN = (process.env.MEDIA_ORIGIN || process.env.API_URL || 'http://localhost:8000').replace(/\/$/, '')
 function rewrite(html) {
-  // Payload may write absolute URLs (https://host/api/media/file/…) or relative ones (/api/media/file/…)
-  return html.replace(/(?:https?:\/\/[^"'\s,)]*?)?\/api\/media\/file\//g, `${BASE}/media/`)
+  return html.replaceAll(`${MEDIA_ORIGIN}/media/`, `${BASE}/media/`)
 }
 
 function outFile(urlPath) {
@@ -109,7 +109,7 @@ try {
   // assets: JS/CSS/fonts, public files, uploaded media
   fs.cpSync(path.join(DIST, 'static'), path.join(OUT, '_next', 'static'), { recursive: true })
   fs.cpSync('public', OUT, { recursive: true })
-  if (fs.existsSync('media')) fs.cpSync('media', path.join(OUT, 'media'), { recursive: true })
+  if (fs.existsSync('backend/media')) fs.cpSync('backend/media', path.join(OUT, 'media'), { recursive: true })
 
   // root → Uzbek home page
   fs.writeFileSync(

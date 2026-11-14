@@ -1,0 +1,38 @@
+<script>
+  (function () {
+    var textarea = document.getElementById("{{ field.id }}");
+    if (!textarea || textarea.dataset.quillInitialized === "1") return;
+    textarea.dataset.quillInitialized = "1";
+    textarea.removeAttribute("required");
+
+    var container = document.createElement("div");
+    container.style.background = "#fff";
+    container.style.height = "auto";
+    textarea.parentNode.insertBefore(container, textarea);
+    textarea.style.display = "none";
+
+    var quill = new Quill(container, {
+      theme: "snow",
+      placeholder: "Matnni shu yerga yozing…",
+      modules: {
+        toolbar: [
+          [{ header: [2, 3, false] }],
+          ["bold", "italic", "underline"],
+          ["link", "blockquote"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          ["clean"],
+        ],
+      },
+    });
+    quill.root.style.minHeight = "{{ field.min_height }}px";
+    if (textarea.value) {
+      quill.setContents(quill.clipboard.convert({ html: textarea.value }));
+    }
+    var form = textarea.closest("form");
+    if (form) {
+      form.addEventListener("submit", function () {
+        textarea.value = quill.root.innerHTML;
+      });
+    }
+  })();
+</script>

@@ -1,0 +1,28 @@
+{% extends "sqladmin/layout.html" %}
+{% block content %}
+<div class="card mt-3">
+  <div class="card-body">
+    <h2 class="mb-2">Xush kelibsiz! 👋</h2>
+    <p class="text-secondary mb-4">Bu yerda saytdagi barcha maʼlumotlarni qoʻshish va tahrirlash mumkin. Qisqa yoʻriqnoma:</p>
+    <div class="row g-4">
+      <div class="col-md-3">
+        <strong>Yangi material qoʻshish</strong>
+        <div class="text-secondary small mt-1">Chap menyudan boʻlimni tanlang (masalan “Kurslar” yoki “Nashrlar”) va yuqoridagi “Yaratish” tugmasini bosing.</div>
+      </div>
+      <div class="col-md-3">
+        <strong>Qoralama va eʼlon qilish</strong>
+        <div class="text-secondary small mt-1">“Holati” maydoni: “Eʼlon qilingan” — saytda koʻrinadi, “Qoralama” — koʻrinmaydi.</div>
+      </div>
+      <div class="col-md-3">
+        <strong>Ikki til</strong>
+        <div class="text-secondary small mt-1">“(EN)” bilan belgilangan maydonlarga inglizcha matnni yozing. Boʻsh qolsa, saytda oʻzbekchasi koʻrsatiladi.</div>
+      </div>
+      <div class="col-md-3">
+        <strong>Roʻyxat maydonlari</strong>
+        <div class="text-secondary small mt-1">“Har qatorga bittadan” deb yozilgan maydonlarda har bir band alohida qatorga yoziladi.</div>
+      </div>
+    </div>
+    <p class="mt-4 mb-0"><a href="{{ site_url }}" target="_blank" rel="noreferrer">Saytni yangi oynada ochish →</a></p>
+  </div>
+</div>
+{% endblock %}
